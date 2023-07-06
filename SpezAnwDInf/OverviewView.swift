@@ -46,11 +46,10 @@ struct OverviewView: View {
                 ForEach(localNotes) { note in // note ist hier eine konstante Struktur
                     var note = note // mutable copy
                     /*@START_MENU_TOKEN@*/Text(note.noteText)/*@END_MENU_TOKEN@*/
-//                        .background(note.isFav == true ? .orange : .gray)
+                        .background(note.isFav == true ? .orange : .gray)
                         .swipeActions(edge: .leading, allowsFullSwipe: false) {
                             Button(role: .destructive) {
                                 print("gelöscht")
-//                                localNotes.removeAll(where: { $0 == note })
                             } label: {
                                 Label("Löschen", systemImage: "trash")
                             }
@@ -65,25 +64,10 @@ struct OverviewView: View {
                             .tint(.blue)
                         }
                 }
-                .navigationTitle("Übersicht")
-//                Text("Eins")
-//                Text("Zwei")
-//                Text("Drei")
             }
+            .navigationTitle("Übersicht")
+            Text("Favoriten: \(favourite.count)")
         }
-        
-//        WindowGroup {
-//            TabView {
-//                ContentView()
-//                    .tabItem {
-//                        Label("Map", systemImage: "globe")
-//                    }
-//                OverviewView()
-//                    .tabItem {
-//                        Label("Overview", systemImage: "list.clipbaord")
-//                    }
-//            }
-//        }
     }
 }
 
