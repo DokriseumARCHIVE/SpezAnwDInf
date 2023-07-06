@@ -23,8 +23,7 @@ struct LocalNote: Hashable, Identifiable {
     var coordinate: CLLocationCoordinate2D
     var noteText: String
     var discription: String?
-    
-    
+    var isFav: Bool?
 }
 
 // Test zur ...
@@ -39,12 +38,32 @@ struct OverviewView: View {
         LocalNote(coordinate: coord, noteText: "zweite Notiz"),
         LocalNote(coordinate: coord, noteText: "dritte Notiz")
     ]
+    @State private var favourite = [LocalNote]()
     
     var body: some View {
         NavigationStack {
             List {
-                ForEach(localNotes) { note in
+                ForEach(localNotes) { note in // note ist hier eine konstante Struktur
+                    var note = note // mutable copy
                     /*@START_MENU_TOKEN@*/Text(note.noteText)/*@END_MENU_TOKEN@*/
+//                        .background(note.isFav == true ? .orange : .gray)
+                        .swipeActions(edge: .leading, allowsFullSwipe: false) {
+                            Button(role: .destructive) {
+                                print("gelöscht")
+//                                localNotes.removeAll(where: { $0 == note })
+                            } label: {
+                                Label("Löschen", systemImage: "trash")
+                            }
+                            Button(role: .none) {
+                                print("Favourite")
+                                favourite.append(note)
+                                print(favourite.count)
+                                note.isFav = true
+                            } label: {
+                                Label("Favourite", systemImage: "star")
+                            }
+                            .tint(.blue)
+                        }
                 }
                 .navigationTitle("Übersicht")
 //                Text("Eins")
